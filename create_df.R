@@ -585,3 +585,4 @@ portugal$date <- as.Date(portugal$date)
 dim(portugal)
 ##
 summary(portugal)
+write.csv(portugal,file="portugal.csv",row.names = FALSE)
