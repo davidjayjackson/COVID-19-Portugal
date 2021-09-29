@@ -1,0 +1,80 @@
+---
+title: "Portugal Covid-19 Analysis"
+author: "David Jackson"
+date: "9/29/2021"
+output: 
+  html_document: 
+    fig_width: 8
+    fig_height: 4
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(scales)
+library(forecast)
+```
+
+```{r}
+portugal <- read.csv("./portugal.csv")
+## Clean Data
+
+portugal <- janitor::clean_names(portugal)
+portugal <- janitor::remove_empty(portugal,which = c("cols","rows"))
+portugal$date <- as.Date(portugal$date)
+dim(portugal)
+```
+
+
+
+
+
+
+### Portugal : Analysis of Cases, Deaths and Vaccination Rate
+
+```{r}
+# Calculate Vaccination Rate i.e Poeple Vaccinate / Population
+portugal <- portugal
+portugal<- portugal %>% mutate(vacc_rate = people_vaccinated/population)
+```
+```{r}
+# Calculate 14 day moivng average
+portugal$avg_cases <-  ma(portugal$new_cases,14,centre = TRUE)
+
+
+portugal$avg_deaths <- ma(portugal$new_deaths,14,centre = TRUE)
+```
+
+### Plot People Vaccinated 
+
+
+```{r}
+portugal %>% na.omit() %>% ggplot(aes(x=date,y=people_vaccinated)) +
+  geom_line() + scale_y_continuous(labels = comma) +
+  labs(title = "Portugal: Total People Vaccinated by Day")
+
+```
+```{r}
+portugal %>% na.omit() %>% ggplot(aes(x=date,y=vacc_rate)) +
+  geom_line() + scale_y_continuous(labels = comma) +
+  labs(title = "Portugal:Vaccinated Rate",
+      y = "Vaccinated Percent") +
+  scale_y_continuous(labels = percent)
+
+```
+
+### Plot of Daily Cases and Daths w/ 14 Day Moving Avearge
+
+```{r}
+portugal %>% na.omit() %>% ggplot() +
+  geom_line(aes(x=date,y=new_cases,col="Daily Cases"),lwd=1) +
+   geom_line(aes(x=date,y=avg_cases,col="Moving Avg."),lwd=1) +
+  labs(title = "Daily cases + 14 Day Moving Average",y="Daily Cases",x="Date")
+```
+```{r}
+portugal %>% na.omit() %>% ggplot() +
+  geom_line(aes(x=date,y=new_deaths,col="Daily Deaths"),lwd=1) +
+   geom_line(aes(x=date,y=avg_deaths,col="Moving Avg."),lwd=1) +
+  labs(title = "Daily Deaths + 14 Day Moving Average",y="Daily Cases",x="Date")
+```
+
