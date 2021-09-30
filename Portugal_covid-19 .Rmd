@@ -13,10 +13,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(scales)
 library(forecast)
+library(RSQLite)
+theme_set(theme_linedraw() + theme(panel.grid = element_line(linetype = 'dashed')))
 ```
 
 ```{r}
-portugal <- read.csv("./portugal.csv")
+db <- db <- dbConnect(RSQLite::SQLite(),dbname= "../COVID-19-DB/OURWORLD.sqlite3")
+portugal <- dbGetQuery(db,"select * from OWID where location ='Portugal'")
+portugal$date <- as.Date(portugal$date)
 ## Clean Data
 
 portugal <- janitor::clean_names(portugal)
@@ -75,6 +79,6 @@ portugal %>% na.omit() %>% ggplot() +
 portugal %>% na.omit() %>% ggplot() +
   geom_line(aes(x=date,y=new_deaths,col="Daily Deaths"),lwd=1) +
    geom_line(aes(x=date,y=avg_deaths,col="Moving Avg."),lwd=1) +
-  labs(title = "Daily Deaths + 14 Day Moving Average",y="Daily Cases",x="Date")
+  labs(title = "Daily Deaths + 14 Day Moving Average",y="Daily Deaths",x="Date")
 ```
 
