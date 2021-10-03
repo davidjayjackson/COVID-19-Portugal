@@ -1,7 +1,7 @@
 ---
 title: "Portugal Covid-19 Analysis"
 author: "David Jackson"
-date: "9/29/2021"
+date: "`r Sys.time()`"
 output: 
   html_document: 
     fig_width: 8
@@ -28,11 +28,6 @@ portugal <- janitor::remove_empty(portugal,which = c("cols","rows"))
 portugal$date <- as.Date(portugal$date)
 dim(portugal)
 ```
-
-
-
-
-
 
 ### Portugal : Analysis of Cases, Deaths and Vaccination Rate
 
