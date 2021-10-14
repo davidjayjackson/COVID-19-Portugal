@@ -56,7 +56,7 @@ portugal %>% na.omit() %>% ggplot(aes(x=date,y=people_vaccinated)) +
 ```
 ```{r}
 portugal %>% na.omit() %>% ggplot(aes(x=date,y=vacc_rate)) +
-  geom_line() + scale_y_continuous(labels = comma) +
+  geom_line() + 
   labs(title = "Portugal:Vaccinated Rate",
       y = "Vaccinated Percent") +
   scale_y_continuous(labels = percent)
