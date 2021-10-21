@@ -34,7 +34,7 @@ dim(portugal)
 
 ```{r}
 # Calculate Vaccination Rate i.e Poeple Vaccinate / Population
-portugal <- portugal
+
 portugal<- portugal %>% mutate(vacc_rate = people_vaccinated/population)
 ```
 ```{r}
@@ -77,6 +77,7 @@ portugal %>% na.omit() %>% ggplot() +
    geom_line(aes(x=date,y=avg_deaths,col="Moving Avg."),lwd=1) +
   labs(title = "Daily Deaths + 14 Day Moving Average",y="Daily Deaths",x="Date")
 ```
+
 ## Cases and Deaths by Week
 
 ```{r}
