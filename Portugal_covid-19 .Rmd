@@ -66,13 +66,13 @@ portugal %>% na.omit() %>% ggplot(aes(x=date,y=vacc_rate)) +
 ### Plot of Daily Cases and Daths w/ 14 Day Moving Avearge
 
 ```{r}
-portugal %>% na.omit() %>% ggplot() +
+portugal  %>% ggplot() +
   geom_line(aes(x=date,y=new_cases,col="Daily Cases"),lwd=1) +
    geom_line(aes(x=date,y=avg_cases,col="Moving Avg."),lwd=1) +
   labs(title = "Daily cases + 14 Day Moving Average",y="Daily Cases",x="Date")
 ```
 ```{r}
-portugal %>% na.omit() %>% ggplot() +
+portugal %>% ggplot() +
   geom_line(aes(x=date,y=new_deaths,col="Daily Deaths"),lwd=1) +
    geom_line(aes(x=date,y=avg_deaths,col="Moving Avg."),lwd=1) +
   labs(title = "Daily Deaths + 14 Day Moving Average",y="Daily Deaths",x="Date")
