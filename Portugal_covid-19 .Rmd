@@ -15,6 +15,7 @@ library(scales)
 library(forecast)
 library(RSQLite)
 library(timetk)
+library(plotly)
 theme_set(theme_linedraw() + theme(panel.grid = element_line(linetype = 'dashed')))
 ```
 
@@ -45,55 +46,42 @@ portugal$avg_cases <-  ma(portugal$new_cases,14,centre = TRUE)
 portugal$avg_deaths <- ma(portugal$new_deaths,14,centre = TRUE)
 ```
 
-### Plot People Vaccinated 
-
-
-```{r}
-portugal %>% na.omit() %>% ggplot(aes(x=date,y=people_vaccinated)) +
-  geom_line() + scale_y_continuous(labels = comma) +
-  labs(title = "Portugal: Total People Vaccinated by Day")
-
-```
-```{r}
-portugal %>% na.omit() %>% ggplot(aes(x=date,y=vacc_rate)) +
-  geom_line() + 
-  labs(title = "Portugal:Vaccinated Rate",
-      y = "Vaccinated Percent") +
-  scale_y_continuous(labels = percent)
-
-```
-
 ### Plot of Daily Cases and Daths w/ 14 Day Moving Avearge
 
 ```{r}
-portugal  %>% ggplot() +
+p1 <- portugal  %>% ggplot() +
   geom_line(aes(x=date,y=new_cases,col="Daily Cases"),lwd=1) +
    geom_line(aes(x=date,y=avg_cases,col="Moving Avg."),lwd=1) +
   labs(title = "Daily cases + 14 Day Moving Average",y="Daily Cases",x="Date")
+ggplotly(p1)
 ```
 ```{r}
-portugal %>% ggplot() +
+p2 <- portugal %>% ggplot() +
   geom_line(aes(x=date,y=new_deaths,col="Daily Deaths"),lwd=1) +
    geom_line(aes(x=date,y=avg_deaths,col="Moving Avg."),lwd=1) +
   labs(title = "Daily Deaths + 14 Day Moving Average",y="Daily Deaths",x="Date")
+ggplotly(p2)
 ```
 
 ## Cases and Deaths by Week
 
 ```{r}
-portugal %>% summarize_by_time(.by ="week",value=sum(new_cases)) %>% na.omit() %>% ggplot(aes(x=date,y=value)) + geom_col() +
+p3 <- portugal %>% summarize_by_time(.by ="week",value=sum(new_cases)) %>% na.omit() %>% ggplot(aes(x=date,y=value)) + geom_col() +
   labs(title = "Weekly Cases")
+ggplotly(p3)
 ```
 ```{r}
-portugal %>% summarize_by_time(.by ="week",value=sum(new_deaths)) %>% na.omit() %>% ggplot(aes(x=date,y=value)) + geom_col() +
+p4 <- portugal %>% summarize_by_time(.by ="week",value=sum(new_deaths)) %>% na.omit() %>% ggplot(aes(x=date,y=value)) + geom_col() +
   labs(title = "Weekly Deaths")
+ggplotly(p4)
 ```
 
 ## Cases and Deaths by Month
 
 ```{r}
-portugal %>% summarize_by_time(.by ="month",value=sum(new_cases)) %>% na.omit() %>% ggplot(aes(x=date,y=value)) + geom_col() +
+p5 <- portugal %>% summarize_by_time(.by ="month",value=sum(new_cases)) %>% na.omit() %>% ggplot(aes(x=date,y=value)) + geom_col() +
   labs(title = "Monthly Cases")
+ggplotly(p5)
 ```
 ```{r}
 portugal %>% summarize_by_time(.by ="month",value=sum(new_deaths)) %>% na.omit() %>% ggplot(aes(x=date,y=value)) + geom_col() +
