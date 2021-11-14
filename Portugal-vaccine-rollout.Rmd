@@ -24,7 +24,7 @@ theme_set(theme_light())
 ## Portugal COVID-19 Rollout
 ### Our World In Data: http://ourworldindata.org
 
-"In August(2021), the United Nations, International Monetary Fund, World Bank, World Health Organization and World Trade Organization called for international commitment and support so that every country would have vaccinated at least 40% of its population with at least one dose by the end of 2021." (Quoted on: http://ourworldindata.org)
+"In August(2021), the **United Nations**, **International Monetary Fund**, **World Bank**, **World Health Organization** and **World Trade Organization** called for international commitment and support so that every country would have vaccinated at least 40% of its population with at least one dose by the end of 2021." (Quoted on: http://ourworldindata.org)
 
 
 ```{r}
@@ -43,7 +43,7 @@ VAC <- SWE %>% filter(date >="2020-12-25") %>%
 ### Individual Plot for Each Type of Vaccination
 
 #### total_vaccinations
-*Total number of COVID-19 vaccination doses administered.
+**Total number of COVID-19 vaccination doses administered.
 
 ```{r}
 
@@ -54,7 +54,7 @@ ggplotly(p1)
 ```
 
 #### people_vaccinated
-* Total number of people who received at least one vaccine dose.
+** Total number of people who received at least one vaccine dose.
 
 ```{r}
 p2 <- VAC %>% filter(date>="2021-01-27") %>% ggplot() + geom_line(aes(x=date,y=people_vaccinated,col="People Vacc.")) +
