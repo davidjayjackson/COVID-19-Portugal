@@ -28,7 +28,7 @@ portugal$date <- as.Date(portugal$date)
 portugal <- janitor::clean_names(portugal)
 portugal <- janitor::remove_empty(portugal,which = c("cols","rows"))
 portugal$date <- as.Date(portugal$date)
-dim(portugal)
+portugal <- portugal %>% filter(date >= Sys.Date() - 365)
 ```
 
 ### Portugal : Analysis of Cases, Deaths and Vaccination Rate
