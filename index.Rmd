@@ -94,8 +94,6 @@ US$Weekly <- as.Date(cut(US$date,
 ```{r}
 Weekly_new_cases <- aggregate(new_cases~Weekly,US,FUN=sum)
 Weekly_new_deaths <- aggregate(new_deaths~Weekly,US,FUN=sum)
-Weekly_new_cases$DRate <- Weekly_new_deaths$new_deaths/Weekly_new_cases$new_cases
-Weekly_new_cases$LivedSaved <- Weekly_new_cases$new_cases * (max(Weekly_new_cases$DRate) - Weekly_new_cases$DRate) 
 
 ```
 ```{r}
@@ -117,7 +115,6 @@ ggplot(Weekly_new_deaths) + geom_col(aes(x=Weekly,y=new_deaths),alpha = 0.5,fill
 Monthly_new_cases <- aggregate(new_cases~Monthly,US,FUN=sum)
 Monthly_new_deaths <- aggregate(new_deaths~Monthly,US,FUN=sum)
 Monthly_new_cases$DRate <- Monthly_new_deaths$new_deaths/Monthly_new_cases$new_cases
-Monthly_new_cases$LivedSaved <- Monthly_new_cases$new_cases * (max(Monthly_new_cases$DRate) - Monthly_new_cases$DRate) * 100
 ```
 ```{r}
 ggplot(Monthly_new_cases) + geom_col(aes(x=Monthly,y=new_cases)) +
